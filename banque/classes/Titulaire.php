@@ -1,11 +1,11 @@
 <?php
 
 class Titulaire{
-    private $nom;
-    private $prenom;
-    private $dateNaissance;
-    private $ville;
-    private $comptes;
+    protected $nom;
+    protected $prenom;
+    protected $dateNaissance;
+    protected $ville;
+    protected $comptes;
 
     public function __construct ($nom="", $prenom="", $dateNaissance="", $ville=""){
         $this->nom = $nom;

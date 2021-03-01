@@ -1,10 +1,10 @@
 <?php
 
 class Compte{
-    private $libelle;
-    private $solde;
-    private $devise;
-    private $titulaire;
+    protected $libelle;
+    protected $solde;
+    protected $devise;
+    protected $titulaire;
 
         public function __construct($libelle="", $solde=0, $devise="", Titulaire $titulaire){
             $this->libelle = $libelle;
@@ -19,28 +19,35 @@ class Compte{
         }
 
         public function crediter($credit){
-            $solde = $this->getSolde();
-            $solde += $credit;
-            $this->setSolde($solde);
-            echo "<br/>Le compte ".$this->getLibelle()." a été crédité de ".$credit, $this->getDevise().", son solde est à présent de ". $solde, $this->getDevise();
+            $this->solde += $credit; 
+            // (ancienne version, avant correction Stéphane)
+            // $solde = $this->getSolde(); 
+            // $solde += $credit;
+            // $this->setSolde($solde);
+            echo "<br/>Le compte ".$this->getLibelle()." a été crédité de ".$credit, $this->getDevise().", son solde est à présent de ". $this->solde, $this->getDevise();
         }
 
         public function debiter($debit){
-            $solde = $this->getSolde();
-            $solde -= $debit;
-            $this->setSolde($solde);
-            echo "<br/>Le compte ".$this->getLibelle()." a été débité de ".$debit, $this->getDevise().", son solde est à présent de ". $solde, $this->getDevise();
+            $this->solde -= $debit; 
+            // (ancienne version, avant correction Stéphane)
+            // $solde = $this->getSolde(); 
+            // $solde -= $debit;
+            // $this->setSolde($solde);
+            echo "<br/>Le compte ".$this->getLibelle()." a été débité de ".$debit, $this->getDevise().", son solde est à présent de ". $this->solde, $this->getDevise();
         }
 
-        public function virer($compteDebite, $compteCredite, $virement){
-            $solde = $compteDebite->getSolde();
-            $solde -= $virement;
-            $compteDebite->setSolde($solde);
-            $solde = $compteCredite->getSolde();
-            $solde += $virement;
-            $compteCredite->setSolde($solde);
-            echo "<br/>Le compte ".$compteDebite->getLibelle()." a été débité de ".$virement, $compteDebite->getDevise().", son solde est à présent de ".$compteDebite->getSolde(), $compteDebite->getDevise();
-            echo "<br/>Le compte ".$compteCredite->getLibelle()." a été crédité de ".$virement, $compteCredite->getDevise().", son solde est à présent de ".$compteCredite->getSolde(), $compteCredite->getDevise();
+        public function virer($compteCredite, $virement){
+            $this->debiter($virement);
+            $compteCredite->crediter($virement);
+            // (ancienne version, avant correction Stéphane)
+            // $solde = $compteDebite->getSolde(); 
+            // $solde -= $virement;
+            // $compteDebite->setSolde($solde);
+            // $solde = $compteCredite->getSolde();
+            // $solde += $virement;
+            // $compteCredite->setSolde($solde);
+            // echo "<br/>Le compte ".$this->getLibelle()." a été débité de ".$virement, $this->getDevise().", son solde est à présent de ".$this->getSolde(), $this->getDevise();
+            // echo "<br/>Le compte ".$compteCredite->getLibelle()." a été crédité de ".$virement, $compteCredite->getDevise().", son solde est à présent de ".$compteCredite->getSolde(), $compteCredite->getDevise();
         }
 
         public function infos(){
